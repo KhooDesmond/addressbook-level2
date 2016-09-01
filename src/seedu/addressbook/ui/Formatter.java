@@ -18,20 +18,20 @@ public class Formatter {
     /** Format of indexed list item */
     private static final String MESSAGE_INDEXED_LIST_ITEM = "\t%1$d. %2$s";
 
-	
     
-    public static String displayFormat(String... string) {
+    private static String displayFormat(String... string) {
 		String displayString = "";
-		 for (String s : string) { 
-			 displayString = displayString + (LINE_PREFIX + s + "\n");
-		 }
+		
+		for(String s: string) {
+			displayString = displayString + LINE_PREFIX + s.replace("\n", LS + LINE_PREFIX) + LS;
+		}
 		 
 		 return displayString; 
 	}
 	
 	/** Formats a list of strings as a viewable indexed list. */
     public static String indexedListForViewingFormat(int displayIndex, String listItem) {
-            return getIndexedListItem(displayIndex, listItem) + "\n";     
+            return displayFormat(getIndexedListItem(displayIndex, listItem));     
     }
 
     /**
@@ -64,11 +64,15 @@ public class Formatter {
 	}
 
 	public static String echoCommandFormat(String fullInputLine) {
-		return displayFormat("[Command entered: " + fullInputLine + "]");
+		return displayFormat("[Command entered:" + fullInputLine + "]");
 	}
 
 	public static String singleDividerFormat(String string) {
 		return displayFormat(string, DIVIDER);
+	}
+
+	public static String listFormat(String string) {
+		return string + LINE_PREFIX + LS;
 	}
 
 }
