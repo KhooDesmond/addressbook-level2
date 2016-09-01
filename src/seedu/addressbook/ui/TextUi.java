@@ -18,7 +18,9 @@ import java.util.Scanner;
  */
 public class TextUi {
 
-    /** A decorative prefix added to the beginning of lines printed by AddressBook */
+    private static final String PROMPT_ENTER_COMMAND = "Enter command: ";
+
+	/** A decorative prefix added to the beginning of lines printed by AddressBook */
     private static final String LINE_PREFIX = "|| ";
 
     /** A platform independent line separator. */
@@ -76,44 +78,44 @@ public class TextUi {
      * @return command (full line) entered by the user
      */
     public String getUserCommand() {
-        out.print(LINE_PREFIX + "Enter command: ");
+        String promptCommand = Formatter.getUserCommandFormat(PROMPT_ENTER_COMMAND);
+        out.print(promptCommand);
         String fullInputLine = in.nextLine();
 
         // silently consume all ignored lines
         while (shouldIgnore(fullInputLine)) {
             fullInputLine = in.nextLine();
         }
-
-        showToUser("[Command entered:" + fullInputLine + "]");
+        
+        String echoCommand = Formatter.echoCommandFormat(fullInputLine);
+        showToUser(echoCommand);
+        
         return fullInputLine;
     }
 
 
     public void showWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        showToUser(
-                DIVIDER,
-                DIVIDER,
-                MESSAGE_WELCOME,
-                version,
-                MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE,
-                storageFileInfo,
-                DIVIDER);
+        String welcomeMsg = Formatter.welcomeMessageFormat(MESSAGE_WELCOME, version,
+        		MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE, storageFileInfo);
+        out.print(welcomeMsg);
     }
 
     public void showGoodbyeMessage() {
-        showToUser(MESSAGE_GOODBYE, DIVIDER, DIVIDER);
+    	String goodbyeMessage = Formatter.doubleDividerFormat(MESSAGE_GOODBYE);
+        showToUser(goodbyeMessage);
     }
 
 
     public void showInitFailedMessage() {
-        showToUser(MESSAGE_INIT_FAILED, DIVIDER, DIVIDER);
+    	String initFailedMessage = Formatter.doubleDividerFormat(MESSAGE_INIT_FAILED);
+    	showToUser(initFailedMessage);
     }
 
     /** Shows message(s) to the user */
     public void showToUser(String... message) {
         for (String m : message) {
-            out.println(LINE_PREFIX + m.replace("\n", LS + LINE_PREFIX));
+            out.print(m);
         }
     }
 
@@ -126,7 +128,8 @@ public class TextUi {
         if(resultPersons.isPresent()) {
             showPersonListView(resultPersons.get());
         }
-        showToUser(result.feedbackToUser, DIVIDER);
+        String feedbackMessage = Formatter.singleDividerFormat(result.feedbackToUser);
+        showToUser(feedbackMessage);
     }
 
     /**
@@ -151,7 +154,7 @@ public class TextUi {
         final StringBuilder formatted = new StringBuilder();
         int displayIndex = 0 + DISPLAYED_INDEX_OFFSET;
         for (String listItem : listItems) {
-            formatted.append(getIndexedListItem(displayIndex, listItem)).append("\n");
+            formatted.append(Formatter.indexedListForViewingFormat(displayIndex, listItem));
             displayIndex++;
         }
         return formatted.toString();
