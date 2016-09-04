@@ -63,7 +63,6 @@ public class Name implements Printable {
 
 	@Override
 	public String getPrintableString(Printable... printables) {
-		// TODO Auto-generated method stub
 		return "Name: " + fullName;
 	}
 
