@@ -46,13 +46,23 @@ public class Name {
     
     /**
      * Returns true of the other name is very similar to this name.
-     * Two names are considered similar if ...
+     * Two names are considered similar if the 'other' name is a subset of the name
+     * ignoring case and sequence
      */
      public boolean isSimilar(Name other) {
     	 if(other == null)
     		 return false;
     	 
-    	 return other.toString().equalsIgnoreCase(fullName);
+    	 for(String word: other.getWordsInName()) {
+    		 boolean match = false;
+    		 for(String word2: getWordsInName()) {
+    			 if(word.equalsIgnoreCase(word2))
+    				 match = true;
+    		 }
+    		 if(!match)
+    			 return false;
+    	 }
+    		 return true;
      }
 
     @Override

@@ -34,11 +34,27 @@ public class NameIsSimilarTest {
 	
 		assertTrue(p1.isSimilar(p2));
 	}
-	@
-	Test
+	
+	@Test
 	public void test4() throws IllegalValueException {
 		Name p1 = new Name("John");
 	
 		assertFalse(p1.isSimilar(null));
+	}
+	
+	@Test
+	public void test5() throws IllegalValueException {
+		Name p1 = new Name("John Smith");
+		Name p2 = new Name("smith john");
+	
+		assertTrue(p1.isSimilar(p2));
+	}
+	
+	@Test
+	public void test6() throws IllegalValueException {
+		Name p1 = new Name("John Smith");
+		Name p2 = new Name("smith");
+	
+		assertTrue(p1.isSimilar(p2));
 	}
 }
