@@ -53,6 +53,7 @@ public class Name {
     	 if(other == null)
     		 return false;
     	 
+      // returns true if all words in 'other' matches at least 1 word in the fullName
     	 for(String word: other.getWordsInName()) {
     		 boolean match = false;
     		 for(String word2: getWordsInName()) {
