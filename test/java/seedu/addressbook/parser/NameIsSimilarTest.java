@@ -13,10 +13,15 @@ public class NameIsSimilarTest {
 	
 	@Test
 	public void test1() throws IllegalValueException {
+		Name p1 = new Name("John");
 		Name p2 = new Name("John");
-		Name p3 = new Name("John");
 	
-		assertTrue(p2.isSimilar(p3));
+		assertTrue(p2.isSimilar(p1));
 	}
+	@Test public void test2() throws IllegalValueException {
+		Name p1 = new Name("John");
+		Name p2 = new Name("Saufi");
 	
+		assertFalse(p1.isSimilar(p2));
+	}
 }
