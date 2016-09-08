@@ -49,7 +49,7 @@ public class Name {
      * Two names are considered similar if ...
      */
      public boolean isSimilar(Name other) {
-    	 return other.toString().equals(fullName);
+    	 return other.toString().equalsIgnoreCase(fullName);
      }
 
     @Override
